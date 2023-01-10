@@ -26,7 +26,7 @@ AppWidgetSummary.propTypes = {
   color: PropTypes.string,
   icon: PropTypes.string,
   title: PropTypes.string.isRequired,
-  total: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired || PropTypes.string,
   subtitle: PropTypes.string,
   sx: PropTypes.object,
 };
@@ -57,7 +57,7 @@ export default function AppWidgetSummary({ title, subtitle ,total, icon, color =
         <Iconify icon={icon} width={24} height={24} />
       </StyledIcon>
 
-      <Typography variant="h3">{fShortenNumber(total)}</Typography>
+      <Typography variant="h3">{typeof total === Number  ? fShortenNumber(total) : total }</Typography>
 
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         {title} 

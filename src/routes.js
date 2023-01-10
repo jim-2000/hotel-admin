@@ -18,6 +18,9 @@ import { useSelector } from 'react-redux';
 import UpdateHotel from './pages/UpdatehotelPage';
 import CreateHotel from './pages/createHotel';
 import Hotelpage from './pages/hotelpage';
+import UpdateRoom from './components/form/CURoom';
+import BookingPage from './pages/BookingPage';
+import CreateBooking from './pages/CreateBooking';
 
 // ----------------------------------------------------------------------
 
@@ -37,12 +40,15 @@ export default function Router() {
           { path: 'hotel', element: <PrivatePage> <Hotelpage /> </PrivatePage> },
           { path: 'updatehotel', element: <PrivatePage> <UpdateHotel /> </PrivatePage> },
           { path: 'createhotel', element: <PrivatePage> <CreateHotel /> </PrivatePage> },
-          { path: 'create-room', element:<PrivatePage> <CreateRoom /> </PrivatePage> },
           { path: 'room', element:<PrivatePage><RoomPage /></PrivatePage>   },
-          { path: 'roomdetails', element:<PrivatePage> <RoomdetailsPage /> </PrivatePage> },
+          { path: 'createroom', element:<PrivatePage> <CreateRoom /> </PrivatePage> },
+          { path: 'updateroom', element:<PrivatePage> <UpdateRoom /> </PrivatePage> },
+          { path: 'roomdetails', element:<PrivatePage> <RoomdetailsPage /> </PrivatePage> },          
+          { path: 'booking', element:<PrivatePage> <BookingPage /> </PrivatePage> },
+          { path: 'createbooking', element:<PrivatePage> <CreateBooking /> </PrivatePage> },
         ],
       },
-      // {
+      // {createbooking
       //   path: '/hotel',
       //   element: user ? <DashboardLayout /> : <SimpleLayout />,  
       //   children: [

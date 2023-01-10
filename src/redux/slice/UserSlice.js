@@ -3,11 +3,13 @@ import * as api from '../api'
 
 export const fetchUser = createAsyncThunk(
     'user/fetchUser', 
-    async (_,{rejectWithValue }) => {
+    async (toast,{rejectWithValue }) => {
     try {
         const response = await  api.ApiGetAllUser();
+        toast.success("User fetched successfully")
         return response.data;
     } catch (error) {
+        toast.success("Something went wrong Please log in again")
         return rejectWithValue(error.response.data);
     }
   }
@@ -29,8 +31,8 @@ export const createUser = createAsyncThunk(
 
 const initialState = {
     users: [],
-    error:'',
-    message:'',
+    uerror:'',
+    umessage:'',
     uLoading: false,
 }
 //
@@ -38,6 +40,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
+     
         sortuser : (state,action) => {
             const {sort} = action.payload;
             if(sort === 'asc'){
@@ -54,12 +57,12 @@ const userSlice = createSlice({
         builder.addCase(fetchUser.fulfilled, (state,action) => {
             state.uLoading = false;
             state.users = action.payload;
-            state.error = '';
-            state.message = '';
+            state.uerror = '';
+            state.umessage = '';
         })
         builder.addCase(fetchUser.rejected, (state,action) => {
             state.uLoading = false;
-            state.error = action.payload.message;
+            state.uerror = action.payload.message;
         })
         builder.addCase(createUser.pending, (state) => {
             state.uLoading = true;            
@@ -67,16 +70,18 @@ const userSlice = createSlice({
         builder.addCase(createUser.fulfilled, (state,action) => {
             state.uLoading = false;
             state.users = [action.payload];
-            state.error = '';
-            state.message = '';
+            state.uerror = '';
+            state.umessage = '';
         })
         builder.addCase(createUser.rejected, (state,action) => {
             state.uLoading = false;
-            state.error = action.payload.message;
+            state.uerror = action.payload.message;
         })
     }
 })
 
 export const selectUser = (state) => state.user.user;
+
+export const {sortuser} = userSlice.actions;
 
 export default  userSlice.reducer;

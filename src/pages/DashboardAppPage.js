@@ -19,6 +19,11 @@ import {
   AppConversionRates,
   AppBookingChart,
 } from '../sections/@dashboard/app';
+import { useDispatch } from 'react-redux';
+import { Allroom } from '../redux/slice/roomSlice';
+import { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
+import { getAllHotels, getHotel } from '../redux/slice/hotelSlice';
 
 
 // ----------------------------------------------------------------------
@@ -26,6 +31,15 @@ import {
 export default function DashboardAppPage() {
   const theme = useTheme();
   
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getHotel());
+    dispatch(getAllHotels(toast));
+    dispatch(Allroom(toast));    
+  }, [ ])
+  
+
 
   return (
     <>

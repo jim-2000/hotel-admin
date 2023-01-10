@@ -20,6 +20,7 @@ import withReactContent from 'sweetalert2-react-content';
 import toast from 'react-hot-toast';
 import Filebase from 'react-file-base64'
 import { useNavigate, useNavigation } from 'react-router-dom';
+import FullPagespinner from '../components/spinner/fullPagespinner';
 
 
 const UpdateHotel = () => {
@@ -51,25 +52,10 @@ const UpdateHotel = () => {
       })
   }
 
-const submit = ()=>{
-    if (hotel.name && hotel.description && hotel.city && hotel.address != null) {
-      console.log(hotel);
-      // dispatch(createHotel({hotel: hotel, tag:{}}));
-      setHotel({name:'',description:'',city:'',address:'',photos:[],nearby:[],faq:[]})
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Please fill all the required fields',
-        footer: 'please Fill up name description city cheapestPrice type',
-      })
-      console.log(hotel);          
-    }
-    // dispatch(createHotel(hotel))
-    // setHotel({...hotel,photos:[]})
-}
+ 
 
 const update = ()=>{
+  position()
   const form ={
     name: hotel.name,
     description: hotel.description,
@@ -91,12 +77,9 @@ React.useEffect(()=>{
   console.log(myhotel, hotel);
 },[])
 
- 
-if (Hloading) {
-  return  <div className='flex items-center justify-center'>Loading.......</div>
-}
-
-
+// if(Hloading){
+//   return <FullPagespinner isloading={Hloading}   />
+// }
   return (
     <>
        <Helmet>
@@ -246,6 +229,7 @@ if (Hloading) {
                     const form ={
                       nId:i,
                     }
+                    console.log(i);
                     const id =myhotel._id                   
                     dispatch(removeNearBy({id, form,toast}))
 

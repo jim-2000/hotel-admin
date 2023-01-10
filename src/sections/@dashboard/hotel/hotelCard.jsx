@@ -41,53 +41,68 @@ const data = [
 
 ];
  
+const cropDescription = (text,max)=>{
+    return text.substring(0,max+1) + '...'+ text.substring(max+1);
+}
 
-
-const RoomCardShow = ({room}) => {
+const HotelCard = ({hotel}) => {
   const navigate = useNavigate();
   const {myhotel} = useSelector((state)=>state.hotel)
   const dispatch = useDispatch()
  
   return ( 
-      <div className='flex flex-col md:flex-row w-full bg-gray-200 h-fit truncate
+    //flex flex-col md:flex-row 
+      <div className='grid grid-cols-1 md:grid-cols-[40%,60%] w-full bg-gray-200  truncate
        m-2 shadow-md cursor-pointer hover:shadow-lg'     
       >
-        <div className=' w-full md:w-1/3  h-full   bg-gray-100'>         
+        <div className=' w-full   h-full   bg-gray-100'>         
           <AwsomeSlides 
-          data={room.img.length > 0 ? room.img :  data}
+          data={hotel.photos.length > 0 ? hotel.photos :  data}
+          key={hotel._id}
           />
             {/* <img src={room.img[0].url} alt="room" style={{ height: '100%', width: '100%', objectFit: 'cover' }} className='hover:scale-95' />        */}
         </div>
-        <div className='flex flex-col w-full md:w-1/2 px-2 py-4 relative'
-        onClick={()=>navigate('/dashboard/roomdetails', { state: { id: room._id} })}
+        <div className='flex flex-col  w-full h-full px-2 py-4 '
+        // onClick={()=>navigate('/dashboard/roomdetails', { state: { id: hotel._id} })}
         >       
-          <Typography variant="h4" gutterBottom color={"GrayText"}    onClick={()=>navigate('/dashboard/roomdetails', { state: { id: room._id } })} className="hover:underline">
-            {room.title}
-          </Typography>
-          <Typography variant="caption" className='pb-2'>
-            This Room is Part of {myhotel.name}
-          </Typography>
-          <div className='flex items-center'>
-                 {/*// 0 for single, 1 for double, 2 for family */}
-             <p className='text-base font-bold text-gray'>{room.roomType === 0 ? 'Singel' : room.roomType == 1 ? 'Double' :'Family' } Room</p>
+         <div className='flex justify-between'>
+            <div>
+                <h4 className="hover:underline text-gray-500 flex items-center font-bold text-lg ">
+                {`${hotel.name} ` }
+                {hotel.isPrimary && <Iconify icon="mdi:tick-circle" color="green" /> }
+                </h4>
+                <p  className='pb-2 text-base font-semibold text-gray-600'>
+                    {hotel.city}
+                </p> 
+            </div>
+            <div>
+                <Typography   className='text-teal-600 font-bold' >
+                $ {hotel.cheapestPrice}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                Per Night
+                </Typography>
           </div>
-          <div className='bg-transparent truncate' 
-          dangerouslySetInnerHTML={{__html: room.description }}
-          />
-       
-          <div className='flex flex-wrap justify-between items-center space-x-1 p-4 bg-gray-5000'>
-            {
-
-             room.roomFeature && room.roomFeature.map((feature,index)=>{
-                return  <IconContainer icon={<Iconify icon={feature.icon} color="teal" />} text={feature.name} key={index} />;
-              })
-            }            
-          </div>
+         </div>      
+         <div className='flex-1  truncate' >
+                {
+                   hotel.description
+                }   
+            {/* <p className=' text-gray-400'>
+            </p> */}
+         </div>
+         <div className='flex flex-wrap items-start m-1  '>
+                {
+                    hotel.nearby && hotel.nearby.map((near)=>{
+                        return <NearByContainer name={near.name} distance={near.distance} />
+                    })
+                }
+         </div>
         </div>
-        <div className='flex flex-col justify-center  md:justify-between w-full md:w-1/6 px-2 py-4 '>
+        {/* <div className='flex flex-col justify-center  md:justify-between w-full md:w-1/6 px-2 py-4 '>
           <div>
             <Typography   className='text-teal-600 font-bold' >
-              $ {room.price}
+              $ {hotel.cheapestPrice}
             </Typography>
             <Typography variant="body2" gutterBottom>
               Per Night
@@ -107,36 +122,39 @@ const RoomCardShow = ({room}) => {
           <div className='flex justify-evenly md:justify-between  space-x-2 flex-wrap'>           
             <IconContainer icon={<Iconify icon="eva:edit-2-fill" color="#000"  onClick={()=>{
               console.log("update");
-              navigate('/dashboard/updateroom',{state:{room:room,id:room._id}})
+            //   navigate('/dashboard/updateroom',{state:{room:room,id:room._id}})
             }} /> } text='Edit'  
            
             />
             <ConfirmDialog 
             Func={()=>{
               const id = room._id;
-              dispatch(DeleteRoom({id,toast}))
+            //   dispatch(DeleteRoom({id,toast}))
               console.log(room._id);
             }}
             widget={<>
-             <IconContainer icon={<Iconify icon="eva:trash-2-fill" color="#a12" /> } text='Delete' color="red" />
+             <IconContainer icon={<Iconify icon="eva:trash-2-fill" color="#a12" />} text='Delete' color="red" />
             </>}
             />
            
           </div>
-        </div>
+        </div>   */}
       </div> 
   )
 }
 
-const IconContainer = ({ icon, text}) => {
+const NearByContainer = ({ name,distance}) => {
   return (
-    <div className='flex' >
-      {icon}
-      <Typography variant="body2" gutterBottom>
-        {text}
+    <div className='flex justify-start flex-1   items-center p-1 m-1 bg-slate-300 hover:bg-slate-400 rounded-md ' >
+      <div className='flex '>
+        <Iconify icon="material-symbols:arrow-right-rounded" color="teal" /> 
+        {name}
+      </div>
+      <Typography variant="body2" color={'teal'} gutterBottom>
+        {distance}
       </Typography>
     </div>
   );
 }
 
-export default RoomCardShow
+export default HotelCard

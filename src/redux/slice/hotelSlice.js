@@ -2,8 +2,21 @@ import { createSlice,createAsyncThunk } from '@reduxjs/toolkit'
 import * as api from '../api'
 
 
-// create hotel
+// get all hotel
+export const getAllHotels = createAsyncThunk(
+    'hotel/getAllHotels',
+    async (toast,{rejectWithValue})=>{
+        try {
+            const response = await api.ApiHotel();
+            return response.data
+        } catch (error) {
+            toast.error(error);
+            rejectWithValue(error);
+        }
+    }
+)
 
+// create hotel
 export const createHotel = createAsyncThunk(
     'hotel/createHotel',
     async ({hotel,tag}, { rejectWithValue }) => {
@@ -35,7 +48,7 @@ export const updateHotel = createAsyncThunk(
         try {
             const response = await api.ApiupdateHotel(form);
             toast.success(response.data);
-            dispatch(getHotel());
+            dispatch(getHotel());            
             return response;
         } catch (error) {
             toast.error(error.message);
@@ -162,6 +175,7 @@ const initialState = {
     hotels: [],
     myhotel: {},
     Hloading:false, 
+    Herror:'',
 }
 //
 const hotelSlice = createSlice({
@@ -177,10 +191,21 @@ const hotelSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
+        builder.addCase(getAllHotels.pending, (state, action) => {           
+            state.Hloading = true;       
+            state.Herror = ''; 
+        })
+        builder.addCase(getAllHotels.fulfilled, (state, action) => {
+            state.hotels = action.payload;
+        }),
+        builder.addCase(getAllHotels.rejected, (state, action) => {
+            state.Hloading = false;
+            state.Herror= action.payload;
+        }),
         builder.addCase(createHotel.fulfilled, (state, action) => {
-        
             state.myhotel = action.payload.data;
-            state.Hloading = false;        
+            state.Hloading = false;       
+            state.Herror = ''; 
         })
         builder.addCase(createHotel.rejected, (state, action) => {
             console.log(action.error.message);     

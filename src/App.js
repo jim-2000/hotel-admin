@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import { setUser } from './redux/slice/authSlice';
 import AuthRoute from './authroutes';
 import { getHotel } from './redux/slice/hotelSlice';
+import { BookingProvider } from './context/bookContext';
 // ----------------------------------------------------------------------
 
 export default function App() {
@@ -35,6 +36,9 @@ export default function App() {
     <ThemeProvider>
       <HotelProvider>
         <RoomProvider>
+          <BookingProvider>
+
+          
           <ScrollToTop />
           <StyledChart />
           <Toaster
@@ -49,6 +53,7 @@ export default function App() {
             <Router />
             : <AuthRoute />
           } */}
+          </BookingProvider>
         </RoomProvider>
       </HotelProvider>
     </ThemeProvider>

@@ -24,30 +24,19 @@ API.interceptors.request.use((req) => {
   })
 // >>>>>>>>>>>>>>>>>>>>>>>> Admin  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
 export const loginAdmin = (form)=>API.post('admin/login', form);
-
+export const createAdmin = (form)=>API.post('admin/register', form);
 
 
 // >>>>>>>>>>>>>>>>>>>>>>>> authentication  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
-
 export const ApiCreateUser = (form) => API.post("auth/register/",form);
+
 // export const ApiLogin = (form) => API.post("auth/login/",form);
 // >>>>>>>>>>>>>>>>>>>>>>>> User  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 export const ApiGetAllUser = () => API.get(`users/`);
 
 // >>>>>>>>>>>>>>>>>>>>>>>> Employe  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 export const ApiGetAllEmploye = () => API.get(`employe/`);
-// >>>>>>>>>>>>>>>>>>>>>>>> forgot password  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-// >>>>>>>>>>>>>>>>>>>>>>>> auth forget otp etc part <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-// export const ApiForgotPassword = (form) => API.post("auth/forgotPassword",form);
-// export const ApiOtpVerification = (form) => API.post("auth/otpVerify",form);
-// export const ApiResentOtpVerification = (form) => API.post("auth/resendOtp",form);
-// export const ApiResetPassword = (form) => API.post("auth/resetPassword",form);
-
-// // Room Api >>>>>>>>>>>>>
-// export const ApiGetRoom = (id) => API.get(`room/getRoom/${id}`);
-// export const ApiGetAllRoom = () => API.get("rooms/");
-// // >>>>>>>>>>>>>>>>>>>>>>>> hotel  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-// export const ApiGetHotelDetails = () => API.get(`hottle/`);
+ 
 
 // >>>>>>>>>>>>>>>>>>>>>>>> Hotel  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 export const ApiHotel = () => API.get(`hottle/`);
@@ -67,3 +56,16 @@ export const ApiRemoveImageHotel = (id,form) => API.patch(`hottle/remove/img/${i
 export const ApiCheck = (form)=>API.patch('hottle/img',form)
 
   
+// >>>>>>>>>>>>>>>>>>>>>>>> ROOM  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+export const ApiCreteRoom = (form)=>API.post('rooms/create/',form);
+export const ApiGetAllRoom = ()=>API.get('rooms/');
+export const ApiGetSingelRoom = (id)=>API.get(`rooms/${id}`);
+export const ApiUpdateRoom = (id,form)=>API.patch(`rooms/${id}`,form)
+export const ApiDeleteRoom = (id)=>API.delete(`rooms/${id}`);
+export const ApiAddRoomFeacher = (id,form)=>API.patch(`rooms/add/feacher/${id}`,form);
+export const ApiRemoveRoomFeacher = (id,form)=>API.patch(`rooms/remove/feacher/${id}/`,form);
+export const ApiAddRoomImg = (id,form)=>API.patch(`rooms//img/add/${id}`,form);
+export const ApiRemoveRoomImg = (id,form)=>API.patch(`rooms/img/remove/${id}`,form);
+
+

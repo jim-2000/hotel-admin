@@ -36,6 +36,7 @@ import { fetchUser } from '../redux/slice/UserSlice';
 import SimpleModal from '../components/modalBox/simpleModal';
 import FormDialog from '../components/modalBox/formDialog';
 import ConfirmDialog from '../components/modalBox/confirmDialog';
+import { toast } from 'react-hot-toast';
 
 // ----------------------------------------------------------------------
 
@@ -95,7 +96,7 @@ export default function UserPage() {
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { users } = useSelector((state) => state.user);
+  const { users ,uerror} = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -148,7 +149,7 @@ export default function UserPage() {
  
 
   useEffect(() => {
-    dispatch(fetchUser());
+    dispatch(fetchUser(toast));
   }, []);
 
 

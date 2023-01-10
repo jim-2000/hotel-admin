@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
-const ConfirmDialog = ({widget, id}) => {
+const ConfirmDialog = ({widget, id,Func}) => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,7 +22,8 @@ const ConfirmDialog = ({widget, id}) => {
             <DialogActions>
           <Button onClick={handleClose} color='success' variant='outlined'>Cancel</Button>
           <Button onClick={()=>{
-            
+            Func()
+            handleClose()
           }} color='error' variant='outlined' >Delete</Button>
         </DialogActions>
         </Dialog>

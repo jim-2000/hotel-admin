@@ -3,7 +3,7 @@ import React from 'react'
 import { useRoom } from '../../context/roomContext';
 import { SimpleInput } from './simpleInput';
 
-const RoomFeacher = ({widget ,data , isupdate=false}) => {
+const RoomFeacher = ({widget ,Fun , isupdate=false}) => {
   const {room,setRoom} = useRoom()
   const [open, setOpen] = React.useState(false); 
   const [ndescription, setDescription] = React.useState('');
@@ -81,8 +81,8 @@ const RoomFeacher = ({widget ,data , isupdate=false}) => {
               // img:nimg,  
             }        
        
-              // dispatch(createUser({form,navigate}))     
-               setRoom({...room,roomFeature:[...room.roomFeature,form]})   
+              setRoom({...room,roomFeature:[...room.roomFeature,form]})   
+              Fun(form)
                console.log(room.roomFeature);                         
                setName('');
                setDescription('');

@@ -115,7 +115,7 @@ function TaskItem({ task , handleDelete }) {
         </Stack> : <Typography sx={{ flexGrow: 1, m: 1 }}>{task.name}</Typography>
         
       }
-      <IconButton size="large" color="inherit" sx={{ opacity: 0.48 }} onClick={()=>handleDelete(task._id)}>
+      <IconButton size="large" color="inherit" sx={{ opacity: 0.48 }} onClick={()=>handleDelete(task)}>
         <Iconify icon={'eva:trash-2-outline'} color="red" />
       </IconButton>
 

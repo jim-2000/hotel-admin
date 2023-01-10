@@ -13,9 +13,12 @@ import { Helmet } from 'react-helmet-async';
 import { Stack } from '@mui/system';
 import RoomFeacher from '../components/form/roomFeacher';
 import { AppTasks } from '../sections/@dashboard/app';
-import { useDispatch } from 'react-redux';
-import { checkApi } from '../redux/slice/hotelSlice';
-import FileBase from "react-file-base64";
+import { useDispatch, useSelector } from 'react-redux';
+import { Createroom } from '../redux/slice/roomSlice';
+import {toast} from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom';
+import FullPagespinner from '../components/spinner/fullPagespinner';
+
 const CreateRoom = () => {    
     const [editorState, setEditorState] = React.useState(EditorState.createEmpty());
 
@@ -23,15 +26,24 @@ const CreateRoom = () => {
 
     const [mImg,setMImg] = React.useState();
 
-    const [feacher,setFeacher] = React.useState([])
+    const {Rloading} = useSelector((state)=>state.room);
 
     const dispatch = useDispatch();
 
-    const {room,setRoom} = useRoom();
+    const {room,setRoom,resetRoom,RemoveFeacher} = useRoom();
 
     const sendData = () => {
         setRoom({...room,description:draftToHtml(convertToRaw(editorState.getCurrentContent()))})
         // console.log(room.description);
+    }
+
+    const navigate = useNavigate();
+
+    React.useEffect(() => {
+      resetRoom()
+    },[]);
+    if(Rloading){
+      return <FullPagespinner isloading={Rloading} />;
     }
   return (
     <>
@@ -46,13 +58,9 @@ const CreateRoom = () => {
            
           <Button variant="outlined" startIcon={<Iconify icon="eva:plus-fill" />} 
           onClick={()=>{
-            // setRoom({...room,img:mImg,coverImg:singelImg})          
-            // console.log(room);
-            const form = {
-              img:room.img,
-            }
+            const form = room;         
             console.log(form);
-            dispatch(checkApi(form))
+            dispatch(Createroom({form,toast,navigate}))
           }}
           >Save</Button>
             
@@ -81,7 +89,8 @@ const CreateRoom = () => {
               name="Room Number"
               label={"Room Number"}
               type="number"        
-              placeholder={"4502"}    
+              placeholder={"4502"}  
+              helperText="unique number by couting floor number"  
               onChange={(e)=>{
                 setRoom({...room,roomNumber:e.target.value})
              }}   
@@ -116,29 +125,7 @@ const CreateRoom = () => {
                 setRoom({...room,size:e.target.value})
              }}    
               />
-              <RadioButtonGrp 
-              label={"Room Status"}
-              setval={(e)=>{                
-                  setRoom({...room,roomstatus:e.target.value})               
-              }}
-              arryofGrp={
-                [
-                  {
-                    'name':'Published',
-                    'value':'published'
-                  },
-                  {
-                    'name':'Scheduled',
-                    'value':'scheduled'
-                  },
-                  {
-                    'name':'Hidden',
-                    'value':'hidden'
-                  },
-                ]
-              }
-              isrow={true}
-              />
+              
               <DropDownInput
               setval={(e)=>{
                 setRoom({...room,roomType:e.target.value}) 
@@ -212,7 +199,7 @@ const CreateRoom = () => {
             <Typography variant='h6'>
                   Basic Information
               </Typography>
-            <Editor
+            <Editor              
               editorState={editorState}
               onEditorStateChange={(editorState)=>{setEditorState(editorState); sendData()}}
               toolbarClassName="toolbarClassName"
@@ -225,38 +212,8 @@ const CreateRoom = () => {
                   },              
               }}
             /> 
-            <div className='py-2'>
-            {/* <FileBase 
-              key={"imageFile"}
-              name={"imageFile"}
-                type="file"
-                multiple={false}
-                onDone={({ base64 }) =>{
-                  setRoom({ ...room, coverimg: base64 })                
-                }
-                
-                }
-            /> */}
-              <ImageUp     
-              value={singelImg}      
-              setval={setSingelImg}
-              widget={
-                <div className='w-full h-14 rounded bg-gray-500 flex items-center justify-center cursor-pointer'>
-                  <Typography variant='h3'>Room Cover Image</Typography>
-                  <Iconify icon="eva:plus-fill" width={24} color="red" />
-                </div>
-              }
-              />
-            </div>  
-            <div className='py-2'>
-              <ImageUp
-              value={mImg}
-              setval={setMImg}
-              ismultiple={true}
-              widget={<><Button variant="outlined"  startIcon={<Iconify icon="eva:plus-fill" />} className="w-full"  >Add More Image</Button></>}
-              />
-            </div >
-            <div className='py-2 overflow-hidden'>
+            <div className='py-2'>          
+         
               <div className='flex justify-between items-center'>
                 <Typography variant='h6'>
                   Room Feacher
@@ -272,16 +229,25 @@ const CreateRoom = () => {
                   title=""
                   subheader={"You can delete Feacher from hare"}
                   list={room.roomFeature}
-                  // list={[
-                  //   { id: '1', label: 'Create FireStone Logo' },
-                  //   { id: '2', label: 'Add SCSS and JS files if required' },
-                  //   { id: '3', label: 'Stakeholder Meeting' },
-                  //   { id: '4', label: 'Scoping & Estimations' },
-                  //   { id: '5', label: 'Sprint Showcase' },
-                  // ]}
+                  handleDelete={(i)=>RemoveFeacher(i.name)}
                 />
                 </>              
-            </div>              
+            </div>  
+           
+            <div className='py-2'>
+              <ImageUp
+              value={mImg}
+              setval={setMImg}
+              ismultiple={true}
+              widget={<>
+                 <div className='w-full h-14 rounded bg-gray-500 flex items-center justify-center cursor-pointer'>
+                  <Typography variant='h3'>Room Image</Typography>
+                  <Iconify icon="eva:plus-fill" width={24} color="red" />
+                </div>
+              </>}
+              />
+            </div >
+                      
             
            
           </div>

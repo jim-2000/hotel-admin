@@ -1,4 +1,6 @@
 @import '~leaflet/dist/leaflet.css';
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 /* @import '~sweetalert2/src/sweetalert2.scss'; */
 @tailwind base;
 @tailwind components;
@@ -12,3 +14,26 @@
         @apply w-full;        
     }
 }
+
+.slick-prev {
+    left: 3% !important;
+    z-index: 1;
+    /* background-color: #9B51E0 !important; */
+ 
+  }
+  .slick-next {
+    right: 3% !important;
+    z-index: 1;
+ 
+}
+
+.slick-prev:before, .slick-next:before {
+    font-size: 25px !important;
+    color: black !important;
+}
+
+.arrow-slider-curstom {
+    font-size: 30px !important;
+    color: black !important;
+}
+  
