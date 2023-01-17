@@ -33,7 +33,8 @@ export const SimpleInput = ({label, name, type, fullWidth, variant, value, onCha
     return (
         <>
             <TextField
-            margin='dense'
+                className='text-gray-400'
+                margin='dense'
                 label={label}
                 name={name}
                 type={type}

@@ -22,6 +22,13 @@ API.interceptors.request.use((req) => {
     }
     return req;
   })
+
+
+//config
+
+export const StripeConfig =()=>API.get('config');
+export const PaymentsConfig =()=>API.post('payments',)
+
 // >>>>>>>>>>>>>>>>>>>>>>>> Admin  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
 export const loginAdmin = (form)=>API.post('admin/login', form);
 export const createAdmin = (form)=>API.post('admin/register', form);
@@ -68,4 +75,7 @@ export const ApiRemoveRoomFeacher = (id,form)=>API.patch(`rooms/remove/feacher/$
 export const ApiAddRoomImg = (id,form)=>API.patch(`rooms//img/add/${id}`,form);
 export const ApiRemoveRoomImg = (id,form)=>API.patch(`rooms/img/remove/${id}`,form);
 
+// >>>>>>>>>>>>>>>>>>>>>>>> ROOM  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+export const ApiGetAllBookings = ()=>API.get('booking');
+export const ApiGetBooked = (form)=>API.post(`booking/booked`,form);

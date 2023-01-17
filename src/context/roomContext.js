@@ -1,7 +1,7 @@
 import React from 'react';
 //
 const roomform = {
-    _id:'',
+    // _id:'',
     title: '',
     description:'',
     roomNumber: '',
@@ -35,6 +35,7 @@ export const RoomProvider = ({ children }) => {
         // setRoom({...room,roomFeature:[...room.roomFeature,filtered]})   
         setRoom({...room,roomFeature:room.roomFeature.filter(rom => (rom.name !== name))})
     }
+   
 
     return <RoomContext.Provider value={{ room,setRoom ,RemoveFeacher,resetRoom,DeleteFeacher}} >{children}</RoomContext.Provider>
 };

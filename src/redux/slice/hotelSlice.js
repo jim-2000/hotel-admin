@@ -196,7 +196,8 @@ const hotelSlice = createSlice({
             state.Herror = ''; 
         })
         builder.addCase(getAllHotels.fulfilled, (state, action) => {
-            state.hotels = action.payload;
+            console.log(action.payload['result'] );
+            state.hotels = action.payload['result'];
         }),
         builder.addCase(getAllHotels.rejected, (state, action) => {
             state.Hloading = false;

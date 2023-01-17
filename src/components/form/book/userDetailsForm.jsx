@@ -12,7 +12,7 @@ const UserDetailsForm = () => {
       }
 
   return (
-    <div>
+    <div className='pb-8'>
         <Stack   direction={{ xs: 'column', sm: 'row' }}  >
             <SimpleInput 
             fullWidth={true}
@@ -46,8 +46,9 @@ const UserDetailsForm = () => {
                 marginRight: '0.5rem',
               }}
             />
-            <SimpleInput 
-            fullWidth={true}
+            <textarea 
+            // fullWidth={true}
+            className='w-full outline-none p-2 text-gray-400 border border-gray-300'
             label="Address"
             name="address"
             value={bookForm.address ?? ''}

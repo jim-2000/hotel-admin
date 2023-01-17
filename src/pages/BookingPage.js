@@ -8,13 +8,21 @@ import { getAllHotels } from '../redux/slice/hotelSlice'
 import { toast } from 'react-hot-toast'
 import HotelCard from '../sections/@dashboard/hotel/hotelCard'
 import Iconify from '../components/iconify/Iconify'
+import { getAllBookings } from '../redux/slice/bookinSlice'
+import { StripeConfig } from '../redux/api'
 
 const BookingPage = () => {
   const {myhotel,hotels} = useSelector((state)=>state.hotel)
+  const {Booking,CencellBooking,pendingBooking} = useSelector((state)=>state.book)
 
   const dispatch = useDispatch()
 
   const navigate = useNavigate();
+
+  React.useEffect(()=>{
+    dispatch(getAllBookings(toast))
+  },[])
+
   return (
     <>
       <Helmet>
@@ -54,9 +62,14 @@ const BookingPage = () => {
            <Typography variant="h4" color={"red"}>
             Cencell Booking
             </Typography>
-            <div className='h-[500px] overflow-y-scroll'>
+            
+            <div className={`${CencellBooking.length > 0 ? `h-[500px]` : 'h-20'} overflow-y-scroll`}>
               {
-                [1,2,3,4].map((n, i) =><CencellBooking />)
+              CencellBooking.length > 0 ? CencellBooking.map((n, i) =><CencellBooking key={i} />) : (
+                <div className='flex items-center justify-center'>
+                  <p className='text-gray-300'>No Booking are cencelled</p>
+                </div>
+              )
               }
             </div>
         </div>
@@ -64,21 +77,29 @@ const BookingPage = () => {
           <Typography variant='h4'>
               New Booking Request
           </Typography>
-           <div className='h-[500px] overflow-y-scroll'>
-            {
-              [1,2,3,4,5,6,7,8,9,10,11,12,15,13,14].map((n, i) =><PendingBooking key={i} />)
-            }
-           </div>
+          <div className={`${pendingBooking.length > 0 ? `h-[500px]` : 'h-20'} overflow-y-scroll`}>
+              {
+              pendingBooking.length > 0 ? pendingBooking.map((n, i) =><PendingBooking key={i} />) : (
+                <div className='flex items-center justify-center'>
+                  <p className='text-gray-300'>No new Booking</p>
+                </div>
+              )
+              }
+          </div>
         </div>
         <div className='py-2 md:py-5'>
           <Typography variant='h4'>
               All Booking
           </Typography>
-           <div className='h-1/2 overflow-y-scroll'>
-            {
-              [1,2,3,4,5,6].map((n, i) =><AllBooking key={i} />)
-            }
-           </div>
+          <div className={`${Booking.length > 0 ? `h-[500px]` : 'h-20'} overflow-y-scroll`}>
+              {
+              Booking.length > 0 ? Booking.map((n, i) =><AllBooking key={i} />) : (
+                <div className='flex items-center justify-center'>
+                  <p className='text-gray-300'>Booking list is empty </p>
+                </div>
+              )
+              }
+          </div>
         </div>
       </div>
     </>

@@ -151,12 +151,16 @@ const initialState = {
     singelRoom:{},
     Rerror:'',
     Rloading:false,   
+    bookRoom:{},
 }
 //
 const roomSlice = createSlice({
     name: 'room',
     initialState,
-    reducers: {        
+    reducers: { 
+        SelectRoomById:(state,action)=>{
+           state.bookRoom = state.rooms.find((room)=>room._id === action.payload)
+        }       
     },
     extraReducers: (builder) => {
         builder.addCase(UpdatesRoom.pending,(state,action) => {
@@ -256,5 +260,7 @@ const roomSlice = createSlice({
         })
     }
 })
+
+export const {SelectRoomById}  = roomSlice.actions;
 
 export default  roomSlice.reducer;

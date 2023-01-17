@@ -60,7 +60,11 @@ const CreateRoom = () => {
           onClick={()=>{
             const form = room;         
             console.log(form);
-            dispatch(Createroom({form,toast,navigate}))
+            if (room.title && room.description && room.roomNumber && room.price) {
+              dispatch(Createroom({form,toast,navigate}))              
+            }else{
+              toast.error("Please input a valid book");
+            }
           }}
           >Save</Button>
             

@@ -54,7 +54,7 @@ const RoomCardShow = ({room}) => {
       >
         <div className=' w-full md:w-1/3  h-full   bg-gray-100'>         
           <AwsomeSlides 
-          data={room.img.length > 0 ? room.img :  data}
+          data={room?.img?.length > 0 ? room.img :  data}
           />
             {/* <img src={room.img[0].url} alt="room" style={{ height: '100%', width: '100%', objectFit: 'cover' }} className='hover:scale-95' />        */}
         </div>

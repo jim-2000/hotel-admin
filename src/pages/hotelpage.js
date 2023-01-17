@@ -35,7 +35,7 @@ const Hotelpage = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={4}>
             <AppWidgetSummary title="Total Hotel " 
-            total={hotels.length} color="success" icon={'ant-design:home-filled'}          
+            total={hotels?.length} color="success" icon={'ant-design:home-filled'}          
             />
           </Grid>
 
@@ -80,7 +80,7 @@ const Hotelpage = () => {
 
         <div className='py-5'>
           {
-            hotels.map((hotel, index) => {
+            hotels &&  hotels.map((hotel, index) => {
                 return <HotelCard hotel={hotel} />
             })
           }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Avatar, Box, Button, Card, Grid, IconButton, Paper, StepLabel, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppWidgetSummary } from '../sections/@dashboard/app'
@@ -14,12 +14,19 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import UserDetailsForm from '../components/form/book/userDetailsForm'
 import BookRoomSeelect from '../components/form/book/bookRoomSeelect'
+import { Allroom } from '../redux/slice/roomSlice'
+import BookPaymentDetails from '../components/form/book/bookPaymentDetails'
+import { BookNow } from '../redux/slice/bookinSlice'
+import { StripeConfig } from '../redux/api'
+import { loadStripe } from '@stripe/stripe-js'
 const CreateBooking = () => {
+  const [stripePromice, setStripePromice] = useState(null)
+
   const [activeStep, setActiveStep] = React.useState(0);
 
   const {rooms} = useSelector((state)=>state.room)
 
-  const {bookForm} = useBookForm()
+  const {bookForm,resetBookForm} = useBookForm()
 
   const dispatch = useDispatch()
 
@@ -48,17 +55,37 @@ const CreateBooking = () => {
    },
    {
     title: 'Payment Confirmation',
-    content: <UserDetailsForm />
+    content: <BookPaymentDetails />
   },
  ]
+
+ React.useEffect(()=>{
+  dispatch(Allroom(toast));
+ 
+ },[])
+ 
   return (
     <>
       <Helmet>
         <title>Book | Hotel luner</title>
       </Helmet>
       <div className='container'>
+    
+        {/* <form onSubmit={(e)=>{
+          e.preventDefault(); 
+          console.log(bookForm);
+        }}     
+
+        >
+            <UserDetailsForm />
+          <BookRoomSeelect />
+          <BookPaymentDetails />
+          <Button type='submit' variant='outlined'>SUMBIT</Button>
+        </form> */}
+
           <Stepper activeStep={activeStep} orientation="vertical">
-            {steps.map((step, index) => (
+            {
+            steps.map((step, index) => (
                 <Step>
                   <StepLabel
                       optional={
@@ -76,10 +103,18 @@ const CreateBooking = () => {
                     {index === steps.length - 1 ? ( <Button
                     variant="outlined"
                     onClick={()=>{
-                      console.log(bookForm);
+                      if (bookForm.name && bookForm.email && bookForm.phone && bookForm.address && bookForm.roomId && bookForm.checkIn && bookForm.checkOut ) {
+                        //&& bookForm.cash && bookForm.paymentId && bookForm.paymentMethod
+                        const form = bookForm;
+                        console.log(form);
+                       dispatch(BookNow({toast,form})) 
+                       resetBookForm()                       
+                      }else{
+                        toast.error("Please input a valid book");
+                      }
                     }}
                     sx={{ mt: 1, mr: 1 }}
-                  >Finish</Button>
+                  >Book Now</Button>
                   ) : 
                   ( <Button
                     variant="outlined"
