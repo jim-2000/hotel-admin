@@ -39,8 +39,9 @@ import FormDialog from '../components/modalBox/formDialog';
 import ConfirmDialog from '../components/modalBox/confirmDialog';
 import AddEmployeForm from '../components/form/addEmployeForm';
 import { AppWidgetSummary } from '../sections/@dashboard/app';
-import { getEmployees } from '../redux/slice/employeSlice';
-
+import { DelteEmploye, getEmployees } from '../redux/slice/employeSlice';
+import FullPagespinner from '../components/spinner/fullPagespinner';
+import { toast } from 'react-hot-toast';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -82,7 +83,7 @@ export default function EmployePage() {
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { employees } = useSelector((state) => state.employe);
+  const { employees,eloading } = useSelector((state) => state.employe);
 
   const dispatch = useDispatch();
 
@@ -135,7 +136,6 @@ export default function EmployePage() {
 
   useEffect(() => {
     dispatch(getEmployees());
-    console.log(employees);
   }, []);
 
   const data = {
@@ -147,6 +147,9 @@ export default function EmployePage() {
     sallary: 5000,
   }
 
+  if(eloading){
+    return <FullPagespinner isloading={eloading} />
+  }
   return (
     <>
       <Helmet>
@@ -192,7 +195,7 @@ export default function EmployePage() {
                   }
                   {
                   // filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                  employees.map((row) => {
+                    employees &&  employees.map((row) => {
                     const { _id, name, phone, email,img,sallary,role,jobTitle } = row;
                     const data = { _id, name, phone, email,img,sallary,role,jobTitle};
                     const selectedUser = selected.indexOf(_id) !== -1;                   
@@ -232,7 +235,11 @@ export default function EmployePage() {
                                     </MenuItem>
                                   } data={data}
                                 /> */}
-                              <ConfirmDialog 
+                              <ConfirmDialog
+                              alert={`Are you sure you want to delete this employee ${name}`} 
+                              Func={()=>{
+                                dispatch(DelteEmploye({id:_id, toast}))
+                              }}
                               id={_id}
                               widget={
                                 <MenuItem sx={{ color: 'error.main' }}>
@@ -249,7 +256,7 @@ export default function EmployePage() {
                   })
                 }
                 {
-                  !employees.length && (
+                  !employees && (
                     <TableRow>
                       <TableCell colSpan={6} align="center">
                         <Typography variant="subtitle1" sx={{ py: 3 }}>

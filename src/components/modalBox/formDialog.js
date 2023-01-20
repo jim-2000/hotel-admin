@@ -11,8 +11,9 @@ import { SimpleInput } from '../form/simpleInput';
 import { useDispatch, useSelector } from 'react-redux';
  import { createUser, fetchUser } from '../../redux/slice/UserSlice';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
-export default function FormDialog({widget ,data , isupdate=false}) {
+export default function FormDialog({widget ,data , isupdate=false,onFun=()=>{}}) {
 
   const { users } = useSelector((state) => state.user);
   const  {email,phone,username,img} = data;     
@@ -124,11 +125,15 @@ export default function FormDialog({widget ,data , isupdate=false}) {
               password: nemail+'123456',
               // img:nimg,  
             }        
+           
             if (!isupdate) {
-              dispatch(createUser({form,navigate}))              
+              dispatch(createUser({form,toast}))              
             }
+            onFun(form);
+            
+            handleClose();
                     
-          }} color='success' variant='outlined' >update</Button>
+          }} color='success' variant='outlined' >{isupdate ? 'update' : 'Create'  }</Button>
         </DialogActions>
       </Dialog>
     </div>

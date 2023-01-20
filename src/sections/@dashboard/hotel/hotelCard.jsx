@@ -57,7 +57,7 @@ const HotelCard = ({hotel}) => {
       >
         <div className=' w-full   h-full   bg-gray-100'>         
           <AwsomeSlides 
-          data={hotel.photos.length > 0 ? hotel.photos :  data}
+          data={hotel.photos?.length > 0 ? hotel.photos :  data}
           key={hotel._id}
           />
             {/* <img src={room.img[0].url} alt="room" style={{ height: '100%', width: '100%', objectFit: 'cover' }} className='hover:scale-95' />        */}

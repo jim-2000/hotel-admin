@@ -34,7 +34,10 @@ const SimpleModal = ({widget,title,description, handleOk,openwidget} ) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color='error' variant='outlined'>Cancel</Button>           
-                <Button onClick={handleOk} color='info' variant='outlined'>Done</Button>           
+                <Button onClick={()=>{
+                    handleOk();
+                    handleClose();
+                }} color='info' variant='outlined'>Done</Button>           
             </DialogActions>
       </Dialog>
         </>

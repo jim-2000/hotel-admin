@@ -6,7 +6,6 @@ export const fetchUser = createAsyncThunk(
     async (toast,{rejectWithValue }) => {
     try {
         const response = await  api.ApiGetAllUser();
-        toast.success("User fetched successfully")
         return response.data;
     } catch (error) {
         toast.success("Something went wrong Please log in again")
@@ -17,17 +16,51 @@ export const fetchUser = createAsyncThunk(
 
 export const createUser = createAsyncThunk(
     'user/createUser',
-    async ({form,navigate},{rejectWithValue}) => {
+    async ({form,toast},{rejectWithValue,dispatch}) => {
         try {
             const response = await api.ApiCreateUser(form);        
-            navigate('/user');
+            toast.success("User created successfully")
+            dispatch(fetchUser(toast))
             return response.data;
         } catch (error) {
             console.warn(error);
-            return rejectWithValue(error.response.data);
+            toast.error("Something went wrong")
+            return rejectWithValue(error);
         }
     }
 );
+
+export const updateUser = createAsyncThunk(
+    "user/updateUser",
+    async ({id,form,toast},{rejectWithValue}) => {
+        try {
+            const response = await api.ApiUpdateUser(id,form);   
+            // navigate('/dashboard/user');
+            toast.success("User Updated successfully")
+            return response.data;
+        } catch (error) {
+            console.warn(error);
+            toast.error("Something went wrong")
+            return rejectWithValue(error);
+        }
+    }
+)
+
+export const deleteUser = createAsyncThunk(
+    'user/deleteUser',
+    async ({id,toast},{rejectWithValue,dispatch}) => {
+        try {
+            const response = await api.ApiDeleteUser(id);   
+            toast.success("User Delete successfully")
+            dispatch(fetchUser(toast))
+            return response.data;
+        } catch (error) {
+            console.warn(error);
+            toast.error("Something went wrong")
+            return rejectWithValue(error);
+        }
+    }
+)
 
 const initialState = {
     users: [],
@@ -39,8 +72,7 @@ const initialState = {
 const userSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {
-     
+    reducers: {     
         sortuser : (state,action) => {
             const {sort} = action.payload;
             if(sort === 'asc'){
@@ -75,7 +107,28 @@ const userSlice = createSlice({
         })
         builder.addCase(createUser.rejected, (state,action) => {
             state.uLoading = false;
-            state.uerror = action.payload.message;
+        })
+        builder.addCase(updateUser.pending, (state) => {
+            state.uLoading = true;            
+        })
+        builder.addCase(updateUser.fulfilled, (state,action) => {
+            state.uLoading = false;
+            state.uerror = '';
+            state.umessage = '';
+        })
+        builder.addCase(updateUser.rejected, (state,action) => {
+            state.uLoading = false;
+        })
+        builder.addCase(deleteUser.pending, (state) => {
+            state.uLoading = true;            
+        })
+        builder.addCase(deleteUser.fulfilled, (state,action) => {
+            state.uLoading = false;
+            state.uerror = '';
+            state.umessage = '';
+        })
+        builder.addCase(deleteUser.rejected, (state,action) => {
+            state.uLoading = false;
         })
     }
 })

@@ -32,7 +32,7 @@ import Scrollbar from '../components/scrollbar';
 import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
-import { fetchUser } from '../redux/slice/UserSlice';
+import { deleteUser, fetchUser, updateUser } from '../redux/slice/UserSlice';
 import SimpleModal from '../components/modalBox/simpleModal';
 import FormDialog from '../components/modalBox/formDialog';
 import ConfirmDialog from '../components/modalBox/confirmDialog';
@@ -203,11 +203,7 @@ export default function UserPage() {
 
                     return (
                       <TableRow hover key={_id} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                        {/* <TableCell padding="checkbox">
-                          <Checkbox checked={selectedUser} 
-                          // onChange={(event) => handleClick(event, _id)} 
-                          />
-                        </TableCell> */}
+                        
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
@@ -234,11 +230,20 @@ export default function UserPage() {
                                     <MenuItem>
                                       <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />                              
                                     </MenuItem>
-                                  } data={data}
+                                  } data={data}                                  
                                   isupdate={true}
+                                  onFun={(form)=>{
+                                    console.log(form,_id);
+                                    dispatch(updateUser({form,id:_id,toast}))
+                                  }}
                                 />
                               <ConfirmDialog 
                               id={_id}
+                              alert={`You want to delete ${username} Permanently.`}
+                              Func={()=>{
+                                console.log(_id);
+                                dispatch(deleteUser({id:_id,toast}));
+                              }}
                               widget={
                                 <MenuItem sx={{ color: 'error.main' }}>
                                 <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />                             

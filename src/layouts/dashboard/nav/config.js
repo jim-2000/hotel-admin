@@ -36,11 +36,11 @@ const navConfig = [
     path: '/dashboard/booking',
     icon: icon('ic_booking'),
   },
-  // {
-  //   title: 'logout',
-  //   path: '/logout',
-  //   icon: icon('ic_lock'),
-  // },
+  {
+    title: 'Calendar',
+    path: '/dashboard/check-calender',
+    icon: icon('ic_calender'),
+  },
   // {
   //   title: 'Not found',
   //   path: '/404',

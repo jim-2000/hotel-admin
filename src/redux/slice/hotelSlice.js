@@ -35,7 +35,7 @@ export const getHotel = createAsyncThunk(
     async (_, {rejectWithValue}) => {
          try {
             const response = await api.ApiGetMyHotel();
-            return response;       
+            return response.data;       
          } catch (error) {
             rejectWithValue(error)
          }
@@ -196,8 +196,7 @@ const hotelSlice = createSlice({
             state.Herror = ''; 
         })
         builder.addCase(getAllHotels.fulfilled, (state, action) => {
-            console.log(action.payload['result'] );
-            state.hotels = action.payload['result'];
+            state.hotels = action.payload;
         }),
         builder.addCase(getAllHotels.rejected, (state, action) => {
             state.Hloading = false;
@@ -216,7 +215,7 @@ const hotelSlice = createSlice({
             state.Hloading = true;
         })
         builder.addCase(getHotel.fulfilled, (state, action) => {
-            state.myhotel = action.payload.data;
+            state.myhotel = action.payload;
             state.Hloading = false;        
         })
         builder.addCase(getHotel.rejected, (state, action) => {

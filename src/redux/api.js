@@ -34,15 +34,17 @@ export const loginAdmin = (form)=>API.post('admin/login', form);
 export const createAdmin = (form)=>API.post('admin/register', form);
 
 
-// >>>>>>>>>>>>>>>>>>>>>>>> authentication  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
-export const ApiCreateUser = (form) => API.post("auth/register/",form);
-
-// export const ApiLogin = (form) => API.post("auth/login/",form);
 // >>>>>>>>>>>>>>>>>>>>>>>> User  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+export const ApiCreateUser = (form) => API.post("auth/register/",form);
 export const ApiGetAllUser = () => API.get(`users/`);
+export const ApiUpdateUser = (id,form) => API.patch(`users/update/${id}`,form);
+export const ApiDeleteUser = (id) => API.delete(`users/delete/${id}`);
 
 // >>>>>>>>>>>>>>>>>>>>>>>> Employe  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 export const ApiGetAllEmploye = () => API.get(`employe/`);
+export const ApiCreateEmploye = (form) => API.post(`employe/add`,form);
+export const ApiUpdateEmploye = (id, form) => API.patch(`employe/update/${id}`,form);
+export const ApiDeleteEmploye = (id) => API.delete(`employe/delete/${id}`);
  
 
 // >>>>>>>>>>>>>>>>>>>>>>>> Hotel  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -79,3 +81,5 @@ export const ApiRemoveRoomImg = (id,form)=>API.patch(`rooms/img/remove/${id}`,fo
 
 export const ApiGetAllBookings = ()=>API.get('booking');
 export const ApiGetBooked = (form)=>API.post(`booking/booked`,form);
+export const ApiDeleteBooked = (id)=> API.delete(`booking/booked/${id}`);
+export const ApiConfirmBooked = (id)=> API.patch(`booking/booked/confirm/${id}`);

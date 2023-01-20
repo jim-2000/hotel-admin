@@ -86,7 +86,9 @@ const CreateBooking = () => {
           <Stepper activeStep={activeStep} orientation="vertical">
             {
             steps.map((step, index) => (
-                <Step>
+                <Step
+                expanded={true}
+                >
                   <StepLabel
                       optional={
                         index === 2 ? (
@@ -107,7 +109,7 @@ const CreateBooking = () => {
                         //&& bookForm.cash && bookForm.paymentId && bookForm.paymentMethod
                         const form = bookForm;
                         console.log(form);
-                       dispatch(BookNow({toast,form})) 
+                       dispatch(BookNow({toast,form,navigate})) 
                        resetBookForm()                       
                       }else{
                         toast.error("Please input a valid book");

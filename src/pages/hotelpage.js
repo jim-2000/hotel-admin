@@ -81,9 +81,10 @@ const Hotelpage = () => {
         <div className='py-5'>
           {
             hotels &&  hotels.map((hotel, index) => {
-                return <HotelCard hotel={hotel} />
+                return <HotelCard hotel={hotel} key={index} />
             })
           }
+           
         </div>   
         
     </div>

@@ -21,6 +21,7 @@ import Hotelpage from './pages/hotelpage';
 import UpdateRoom from './components/form/CURoom';
 import BookingPage from './pages/BookingPage';
 import CreateBooking from './pages/CreateBooking';
+import CheckCalender from './pages/CheckCalender';
 
 // ----------------------------------------------------------------------
 
@@ -46,6 +47,7 @@ export default function Router() {
           { path: 'roomdetails', element:<PrivatePage> <RoomdetailsPage /> </PrivatePage> },          
           { path: 'booking', element:<PrivatePage> <BookingPage /> </PrivatePage> },
           { path: 'createbooking', element:<PrivatePage> <CreateBooking /> </PrivatePage> },
+          { path: 'check-calender', element:<PrivatePage> <CheckCalender /> </PrivatePage> },
         ],
       },
       // {createbooking

@@ -216,8 +216,8 @@ const CreateRoom = () => {
                   },              
               }}
             /> 
-            <div className='py-2'>          
-         
+            <div className='py-5'>          
+              <span className='text-sm text-gray-400'>some basic feacher are alrady added like <span className='text-gray-500'>wifi, fredge, Tv, coffe, Air, etc <small className='text-gray-600'>you change it from main server</small> </span> </span>
               <div className='flex justify-between items-center'>
                 <Typography variant='h6'>
                   Room Feacher

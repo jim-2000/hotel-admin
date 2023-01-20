@@ -5,9 +5,13 @@ import Iconify from '../iconify/Iconify'
 import SimpleModal from '../modalBox/simpleModal'
 import DropDownInput from './dropDownInput'
 import { SimpleInput } from './simpleInput'
+import { useDispatch } from 'react-redux'
+import { CreateEmployee, UpdateEmployee } from '../../redux/slice/employeSlice'
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const AddEmployeForm = ({isupdate=false,data },...props) => {
-    const {email,phone,name,img,jobtitle,sallary} = data ?? {};
+    const {email,phone,name,img,jobtitle,sallary,_id} = data ?? {};
  console.log(data);
     const [nemail, setEmail] = React.useState(email ?? '');
     const [nphone, setPhone] = React.useState(phone ?? '');
@@ -16,6 +20,8 @@ const AddEmployeForm = ({isupdate=false,data },...props) => {
     const [nsallary, setSellary] = React.useState(sallary?? '');
     const [nimg, setImg] = React.useState(img ?? '');
     const [nrole, setRole] = React.useState('employe' ?? '');
+    const dispatch = useDispatch()
+    const navigator = useNavigate()
     const form ={
         email:nemail,
         phone:nphone,
@@ -25,13 +31,18 @@ const AddEmployeForm = ({isupdate=false,data },...props) => {
         role:nrole    , 
         sallary:nsallary,   
     }
+
   return (
     <div>        
         <SimpleModal
         description={isupdate ? 'Update Employe' : 'Add new employe'}
         title={'Add Employe'}
         handleOk={()=>{
-            console.log(form);
+            if(!isupdate){
+                dispatch(CreateEmployee({form,toast,navigator}))
+            }
+            const id =data._id;
+            dispatch(UpdateEmployee({id,form,toast}))
         }}
         openwidget={ isupdate ? <Iconify icon='bx:bxs-edit' /> : <Button variant='outlined' color='info'>Add Employe</Button> } 
         widget={
@@ -51,6 +62,7 @@ const AddEmployeForm = ({isupdate=false,data },...props) => {
                     value={njobtitle}
                     onChange={(e)=>setJobtitle(e.target.value)} 
                 />
+                
                 <SimpleInput 
                     fullWidth={true}
                     label='Name'
@@ -87,6 +99,7 @@ const AddEmployeForm = ({isupdate=false,data },...props) => {
                     value={nsallary}
                     onChange={(e)=>setSellary(e.target.value)} 
                 />
+              
                 <Stack direction={"row"} spacing={2} marginY={3}>
                { 
                isupdate ?  (

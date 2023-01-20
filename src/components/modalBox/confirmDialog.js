@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
-const ConfirmDialog = ({widget, id,Func}) => {
+const ConfirmDialog = ({widget,Func=()=>{},alert}) => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -17,7 +17,7 @@ const ConfirmDialog = ({widget, id,Func}) => {
             widget === 'button' ?( <Button variant="outlined" onClick={handleClickOpen}>Open</Button>) :( <div onClick={handleClickOpen}>{widget}</div>)
         }
         <Dialog open={open} >
-             <DialogTitle>Are you Sure You wan't to Delete This User</DialogTitle>
+             <DialogTitle>{alert ?? `Are you Sure You wan't This` }</DialogTitle>
             <DialogContent></DialogContent>
             <DialogActions>
           <Button onClick={handleClose} color='success' variant='outlined'>Cancel</Button>
