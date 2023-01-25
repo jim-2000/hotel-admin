@@ -19,12 +19,11 @@ export const createUser = createAsyncThunk(
     async ({form,toast},{rejectWithValue,dispatch}) => {
         try {
             const response = await api.ApiCreateUser(form);        
-            toast.success("User created successfully")
+            toast.success(response.data.meassage)
             dispatch(fetchUser(toast))
             return response.data;
         } catch (error) {
-            console.warn(error);
-            toast.error("Something went wrong")
+            toast.error(error.response.data['meassage']);
             return rejectWithValue(error);
         }
     }

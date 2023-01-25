@@ -9,7 +9,8 @@ import Logo from '../components/logo';
 import Iconify from '../components/iconify';
 // sections
 import { LoginForm } from '../sections/auth/login';
-import { Link, useNavigate } from 'react-router-dom';
+import SignupForm from '../sections/auth/signup/SignupForm';
+import { Link } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -43,13 +44,13 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function LoginPage() {
+export default function SignUpPage() {
   const mdUp = useResponsive('up', 'md');
-  const navigate = useNavigate()
+
   return (
     <>
       <Helmet>
-        <title> Login | Hotel Luner </title>
+        <title> Sign UP | Hotel Luner </title>
       </Helmet>
 
       <StyledRoot>
@@ -78,12 +79,12 @@ export default function LoginPage() {
         <Container maxWidth="sm">
           <StyledContent>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Sign Up to Hotel Luner
             </Typography>
 
-            <Typography variant="body2" sx={{ mb: 5 }}  >
-              Don’t have an account? {''}
-              <Link className='cursor-pointer text-sky-400 hover:underline hover:text-sky-600' to={'/signup'}>Sign Up</Link>
+            <Typography variant="body2" sx={{ mb: 5 }}>
+             Alrady have an account? {''}
+             <Link className='cursor-pointer text-sky-400 hover:underline hover:text-sky-600' to={'/login'}>Login</Link>
             </Typography>
 
             <Stack direction="row" spacing={2}>
@@ -106,7 +107,7 @@ export default function LoginPage() {
               </Typography>
             </Divider>
 
-            <LoginForm />
+            <SignupForm />
           </StyledContent>
         </Container>
       </StyledRoot>

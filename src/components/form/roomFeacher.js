@@ -3,7 +3,7 @@ import React from 'react'
 import { useRoom } from '../../context/roomContext';
 import { SimpleInput } from './simpleInput';
 
-const RoomFeacher = ({widget ,Fun , isupdate=false}) => {
+const RoomFeacher = ({widget ,Fun=()=>{} , isupdate=false}) => {
   const {room,setRoom} = useRoom()
   const [open, setOpen] = React.useState(false); 
   const [ndescription, setDescription] = React.useState('');

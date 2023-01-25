@@ -197,12 +197,12 @@ export default function UserPage() {
                   
                   {                 
                   users.map((row) => {
-                    const { _id, username, phone, email, country, img, isBlocked,isVerified } = row;
+                    const { _id, username, phone, email, country, img, isBlocked,isVerified,role } = row;
                     const data = { _id, username, phone, email, country, img, isBlocked,isVerified };
                     const selectedUser = selected.indexOf(_id) !== -1;                   
 
                     return (
-                      <TableRow hover key={_id} tabIndex={-1} role="checkbox" selected={selectedUser}>
+                      <TableRow hover key={_id} className={`${role === 'admin' ? 'bg-teal-600' : 'bg-gray-400'}`}>
                         
 
                         <TableCell component="th" scope="row" padding="none">

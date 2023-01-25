@@ -84,7 +84,7 @@ const RoomCardShow = ({room}) => {
             }            
           </div>
         </div>
-        <div className='flex flex-col justify-center  md:justify-between w-full md:w-1/6 px-2 py-4 '>
+        <div className='flex flex-col justify-center items-end  md:justify-between w-full md:w-1/6 px-2 py-4 '>
           <div>
             <Typography   className='text-teal-600 font-bold' >
               $ {room.price}
@@ -97,10 +97,10 @@ const RoomCardShow = ({room}) => {
             <Rating name="read-only" value={2} readOnly />
             <div className='flex space-x-2 items-center'>
             <Typography variant="h6" gutterBottom>
-              4.5
+              {room.roomNumber}
             </Typography>
             <Typography variant="body2" gutterBottom color={'gray'}>
-              Rating
+              Room Number
             </Typography>
             </div>
           </div>

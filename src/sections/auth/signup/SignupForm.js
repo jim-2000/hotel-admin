@@ -8,14 +8,15 @@ import Iconify from '../../../components/iconify';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
  
-import {LOGIN} from '../../../redux/slice/authSlice'
+import {ADMINSIGNUP, LOGIN} from '../../../redux/slice/authSlice'
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
+export default function SignupForm() {
   const [email, setEmail] = useState('');
-
+  const [phone, setphone] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
 
   const [rememberMe, setrememberMe] = useState(true);
 
@@ -28,39 +29,33 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClick = () => {
-    if (email === '' || password === '') {      
-      toast.error('Please enter your email and password');   
-      // alert("email, password");
+    if (email && password && username && phone ) {      
+        let form = {
+            username: username.trim(),
+            email: email.trim(),
+            password: password.trim(),
+            phone:phone.trim(),
+          }
+          if (rememberMe) {
+            localStorage.setItem('userAuth',JSON.stringify(form))
+          }
+          dispatch(ADMINSIGNUP({form,toast,navigate}));      
     }
     else {
-      let form = {
-        email: email.trim(),
-        password: password.trim(),
-      }
-      if (rememberMe) {
-        localStorage.setItem('userAuth',JSON.stringify(form))
-      }
-      dispatch(LOGIN({form,toast,navigate}));      
+        toast.error('Please enter your username email and password');   
+     
     }
 
     // navigate('/dashboard', { replace: true });
   };
 
-  useEffect(()=>{
-    const form = JSON.parse(localStorage.getItem('userAuth'));
-    if(form){      
-      console.log(form.email);
-      setEmail(form.email)
-      setPassword(form.password)    
-      setrememberMe(true)  
-      dispatch(LOGIN({form,toast,navigate}))
-    }
-  },[])
-
+ 
   return (
     <>
       <Stack spacing={3}>
+        <TextField name="username" label="User Name" onChange={(e)=>setUsername(e.target.value)} value={username} />
         <TextField name="email" label="Email address" onChange={(e)=>setEmail(e.target.value)} value={email} />
+        <TextField name="phone" label="Your Phone" onChange={(e)=>setphone(e.target.value)} value={phone} />
         <TextField
           name="password"
           label="Password"
@@ -89,14 +84,11 @@ export default function LoginForm() {
           <Typography variant='body2' color={rememberMe ? 'InfoText' : 'GrayText'}>
             Remember me
           </Typography>
-        </Stack>
-        <Link variant="subtitle2" underline="hover">
-          Forgot password?
-        </Link>
+        </Stack>     
       </Stack>
 
       <LoadingButton fullWidth size="large" type="submit" variant="outlined" onClick={handleClick}>
-        Login
+        Singup
       </LoadingButton>
     </>
   );

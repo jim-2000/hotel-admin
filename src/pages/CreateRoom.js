@@ -6,7 +6,7 @@ import { useRoom } from '../context/roomContext';
 import draftToHtml from 'draftjs-to-html';
 import { Button, Container, Typography } from '@mui/material';
 import { SimpleInput } from '../components/form/simpleInput';
-import DropDownInput, { RadioButtonGrp } from '../components/form/dropDownInput';
+import DropDownInput  from '../components/form/dropDownInput';
 import ImageUp from '../components/imageup/imageUploading';
 import Iconify from '../components/iconify/Iconify';
 import { Helmet } from 'react-helmet-async';
@@ -14,7 +14,7 @@ import { Stack } from '@mui/system';
 import RoomFeacher from '../components/form/roomFeacher';
 import { AppTasks } from '../sections/@dashboard/app';
 import { useDispatch, useSelector } from 'react-redux';
-import { Createroom } from '../redux/slice/roomSlice';
+import { AddFeacher, Createroom } from '../redux/slice/roomSlice';
 import {toast} from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom';
 import FullPagespinner from '../components/spinner/fullPagespinner';
@@ -217,7 +217,7 @@ const CreateRoom = () => {
               }}
             /> 
             <div className='py-5'>          
-              <span className='text-sm text-gray-400'>some basic feacher are alrady added like <span className='text-gray-500'>wifi, fredge, Tv, coffe, Air, etc <small className='text-gray-600'>you change it from main server</small> </span> </span>
+              <span className='text-sm text-orange-400'>Some basic feacher are alrady added like <span className='text-gray-500'>wifi, fredge, Tv, coffe, Air, etc <small className='text-gray-600'>you change it from main server</small> </span> </span>
               <div className='flex justify-between items-center'>
                 <Typography variant='h6'>
                   Room Feacher
@@ -226,6 +226,11 @@ const CreateRoom = () => {
                 widget={
                     <Button variant="outlined"  startIcon={<Iconify icon="eva:plus-fill" />} className="w-auto"  >Add New Feacher</Button>
                 }           
+                Fun={(data)=>{
+                  const form = data;
+                  // const id = room._id;
+                  // dispatch(AddFeacher({id,form,toast}))
+              }}
                 />                              
               </div>   
               <>

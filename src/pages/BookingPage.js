@@ -40,7 +40,15 @@ const BookingPage = () => {
               <h2 className='text-gray-600 font-bold'>{myhotel.name}</h2>
               <p className='text-gray-400'>{myhotel.address}</p>
             </div>
-            <div className='flex'>
+            <div className='flex space-x-2'>
+            <Button variant="outlined" startIcon={<Iconify icon="mdi:guest-room-outline" color="orange" /> }
+            color='success'
+              onClick={()=>{
+                navigate('/dashboard/room')
+              }}
+              >
+              Room
+            </Button>
             <Button variant="outlined" startIcon={<Iconify icon="simple-line-icons:calender" color="teal" /> }
             color='success'
               onClick={()=>{

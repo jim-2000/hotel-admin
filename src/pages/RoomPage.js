@@ -36,6 +36,15 @@ const RoomPage = () => {
             Room
           </Typography>
           {/* <CreateUpdateRoom  /> */}
+          <div className='flex justify-between space-x-2'>
+          <Button variant="outlined" startIcon={<Iconify icon="simple-line-icons:calender" color="teal" /> }
+            color='success'
+              onClick={()=>{
+                navigate('/dashboard/check-calender')
+              }}
+              >
+              Check calender
+          </Button>
           <Button variant="outlined" startIcon={<Iconify icon="eva:plus-fill" />}
           onClick={()=>{
             navigate('/dashboard/createroom')
@@ -43,6 +52,7 @@ const RoomPage = () => {
           >
             New Room
           </Button>
+          </div>
         </Stack>
         <Grid container spacing={2} >
             {

@@ -22,6 +22,7 @@ import UpdateRoom from './components/form/CURoom';
 import BookingPage from './pages/BookingPage';
 import CreateBooking from './pages/CreateBooking';
 import CheckCalender from './pages/CheckCalender';
+import SignUpPage from './pages/SignupPage';
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +35,7 @@ export default function Router() {
         path: '/dashboard',
         element: user ? <DashboardLayout /> : <SimpleLayout />,    
         children: [
-          { element: <Navigate to="/dashboard/app" />, index: true },
+          { element: <Navigate to={user ?"/dashboard/app" : "login"} />, index: true },
           { path: 'app', element: <PrivatePage><DashboardAppPage /></PrivatePage> },
           { path: 'user', element: <PrivatePage><UserPage /></PrivatePage>  },
           { path: 'employe', element: <PrivatePage><EmployePage /></PrivatePage>  },
@@ -63,6 +64,10 @@ export default function Router() {
     {
       path: 'login',
       element: <LoginPage />,
+    },
+    {
+      path: 'signup',
+      element: <SignUpPage />,
     },
     {
       element: <SimpleLayout />,

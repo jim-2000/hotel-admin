@@ -26,13 +26,9 @@ export const RoomProvider = ({ children }) => {
     const resetRoom = () => setRoom(roomform);
 
     const RemoveFeacher = (name)=>{
-        // const filtered = room.roomFeature.filter(rom => (rom.name !== name));
-        // setRoom({...room,roomFeature:[...room.roomFeature,filtered]})   
         setRoom({...room,roomFeature:room.roomFeature.filter(rom => (rom.name !== name))})
     }
     const DeleteFeacher = (name)=>{
-        // const filtered = room.roomFeature.filter(rom => (rom.name !== name));
-        // setRoom({...room,roomFeature:[...room.roomFeature,filtered]})   
         setRoom({...room,roomFeature:room.roomFeature.filter(rom => (rom.name !== name))})
     }
    

@@ -30,7 +30,14 @@ const CheckCalender = () => {
               <p className='text-sky-600'>{format(new Date(),'EEE-dd-MM-yyyy')}</p>
             </div>
            <>
-           <Button variant="outlined" startIcon={<Iconify icon="eva:plus-fill" />}
+           <Button variant="outlined" color='pink' startIcon={<Iconify icon="mdi:guest-room-outline" />}
+              onClick={()=>{
+                navigate('/dashboard/booking')
+              }}
+              >
+              Confirm Booking
+            </Button>
+            <Button variant="outlined" color='success'
               onClick={()=>{
                 navigate('/dashboard/createbooking')
               }}
