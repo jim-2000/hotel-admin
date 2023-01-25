@@ -4,7 +4,6 @@ import  { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useSelector } from 'react-redux';
-import Popup from 'react-popup';
 import Calendertoolbar from './calendertoolbar';
 import CalendarEventWrapper from './CalendarEventWrapper';
 const localizer = momentLocalizer(moment);

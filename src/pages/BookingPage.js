@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Avatar, Button, Card, Grid, IconButton, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppWidgetSummary } from '../sections/@dashboard/app'
@@ -11,6 +11,11 @@ import Iconify from '../components/iconify/Iconify'
 import { ConfirmBooked, RemoveBooked, getAllBookings } from '../redux/slice/bookinSlice'
 import { StripeConfig } from '../redux/api'
 import { format } from 'date-fns'
+import withReactContent from 'sweetalert2-react-content'
+import Swal from 'sweetalert2'
+import EditBooking from '../components/modalBox/EditBookingForm'
+ 
+
 
 const BookingPage = () => {
   const {myhotel,hotels} = useSelector((state)=>state.hotel)
@@ -69,7 +74,7 @@ const BookingPage = () => {
           </Grid>
         </Grid>
         <div className='py-2 md:py-2 '>
-           <Typography variant="h4" color={"red"}>
+           {/* <Typography variant="h4" color={"red"}>
             Cencell Booking
             </Typography>
             
@@ -81,7 +86,7 @@ const BookingPage = () => {
                 </div>
               )
               }
-            </div>
+            </div> */}
         </div>
         <div className='py-2 md:py-5'>
           <Typography variant='h4'>
@@ -138,7 +143,16 @@ export const PendingBooking = ({booked})=>{
   const end = format(edate, 'EEE-dd-MM-yyyy')
   const create = format(new Date(booked.createdAt), 'EEE-dd-MM-yyyy')
   const dispatch = useDispatch()
-// flex flex-col justify-between md:flex-row 
+  const MySwal = withReactContent(Swal);
+
+const OnPOPupClick =(book)=>{
+ console.log(book);
+ MySwal.fire({
+  title: booked.userName ?? 'unknown',
+  text:book.message ?? '',
+ })
+}
+
   return (
     <>
     <div className={`
@@ -157,7 +171,7 @@ export const PendingBooking = ({booked})=>{
             >ID 
               <span className='font-bold text-black underline'> {booked.sortId} </span>
             </p> 
-            <p className='text-gray-400'>{booked.createdAt }</p>
+            <p className='text-gray-400'>{create}</p>
             <p className='text-gray-400 truncate'>{booked.phone}</p>
             <p className='text-gray-400 truncate'>{booked.email}</p>
             <p className='text-gray-600 font-bold truncate'>{booked.isCarNeed ? 'Need a car' : ''}</p>
@@ -211,14 +225,14 @@ export const PendingBooking = ({booked})=>{
      {/* action part  */}
     <div className=' absolute py-1  right-0 bottom-0 flex  justify-evenly my-2 md:my-0'>
       <IconButton
-      className='bg-teal-600'
+      className='bg-black'
       onClick={()=>{
         dispatch(ConfirmBooked({id:booked._id,toast}))
       }}
       >
         <Iconify icon="mdi:tick-circle"  color="green" />
       </IconButton>
-      <div className='w-1' />
+      <div className='w-1 h-1' />
       <IconButton
       className='bg-orange-300'
       onClick={()=>{
@@ -227,7 +241,19 @@ export const PendingBooking = ({booked})=>{
       >
         <Iconify icon="eva:trash-2-fill" color="red"  />
       </IconButton>
-      
+      <div className='w-1 h-1' />
+
+      <IconButton
+      className='bg-gray-700'
+      > 
+        <EditBooking  />
+      </IconButton> 
+      <IconButton
+        className='bg-sky-700'
+        onClick={()=>OnPOPupClick(booked)}
+        >
+        <Iconify icon="bi:envelope-fill" color="orange"  />
+      </IconButton>
     </div>
   </div>
   </>
@@ -319,8 +345,17 @@ export const AllBooking = ({booked})=>{
   const start = format(sdate, 'EEE-dd-MM-yyyy')
   const end = format(edate, 'EEE-dd-MM-yyyy')
   const create = format(new Date(booked.createdAt), 'EEE-dd-MM-yyyy')
-  
   const dispatch = useDispatch()
+  const MySwal = withReactContent(Swal);
+
+  const OnPOPupClick =(book)=>{
+   console.log(book);
+   MySwal.fire({
+    title: booked.userName ?? 'unknown',
+    text:book.message ?? '',
+   })
+  }
+  
   return (
     <>
       <div className={`flex flex-col justify-between md:flex-row shadow 
@@ -328,7 +363,9 @@ export const AllBooking = ({booked})=>{
       ${booked.IsOnlinepaid ? 'bg-gray-300' : 'bg-sky-300'}
       hover:shadow-md
       relative
-      `}>
+      `}
+      // onClick={()=>OnPOPupClick(booked)} 
+      >
                 
       <div className='flex flex-col flex-wrap md:flex-row   space-y-1 px-2'>
           {/* <img
@@ -403,12 +440,21 @@ export const AllBooking = ({booked})=>{
         <p className='font-bold text-gray-600'>{booked.roomNumber}</p>             
         </div>
       </div> 
-      <div className='absolute cursor-pointer right-1 bottom-1 w-10 h-10 rounded-full bg-black flex items-center justify-center hover:bg-slate-400 hover:shadow-md'
-      onClick={()=>{
-        dispatch(RemoveBooked({id:booked._id,toast}))
-      }}
+      <div className='absolute cursor-pointer right-1 bottom-1 space-x-2 flex items-center justify-between'
+   
       >
+      <IconButton
+        className='bg-sky-700'
+        onClick={()=>dispatch(RemoveBooked({id:booked._id,toast}))}
+        >
         <Iconify icon="eva:trash-2-fill" color="#a12" />
+      </IconButton>
+        <IconButton
+        className='bg-sky-700'
+        onClick={()=>OnPOPupClick(booked)}
+        >
+        <Iconify icon="bi:envelope-fill" color="orange"  />
+      </IconButton>
       </div>
     </div>
     </>

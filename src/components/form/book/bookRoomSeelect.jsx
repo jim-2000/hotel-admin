@@ -42,9 +42,9 @@ const BookRoomSeelect = () => {
         // const total = Math.floor(bookForm.totalNight*value.price);
         // setCost(value.price)                                    
         // setBookForm({...bookForm,totalAmount:total});
-        dispatch(SelectRoomById(value));
-        
+        dispatch(SelectRoomById(value));        
     }
+    
     const onChange = (e)=>{
         const {name,value} = e.target;     
         setBookForm({...bookForm, [name]: value}) 
