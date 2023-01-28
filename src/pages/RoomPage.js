@@ -11,6 +11,7 @@ import { Allroom } from '../redux/slice/roomSlice';
 import { toast } from 'react-hot-toast';
 import { useNavigate, useNavigation } from 'react-router-dom';
 import FullPagespinner from '../components/spinner/fullPagespinner';
+import { AppWidgetSummary } from '../sections/@dashboard/app';
 
 
 const RoomPage = () => {
@@ -54,6 +55,14 @@ const RoomPage = () => {
           </Button>
           </div>
         </Stack>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6} md={4}>
+            <AppWidgetSummary title="Total Room" 
+            total={rooms?.length} color="success" icon={'ant-design:home-filled'}          
+            />
+          </Grid>
+        </Grid>
+        <div className='h-5 w-full' />
         <Grid container spacing={2} >
             {
               // [1,2,3,4,5,6,7,8,9,10,11,12].map((item, index) => <RoomCardShow key={index} />)

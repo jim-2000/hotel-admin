@@ -17,6 +17,8 @@ import { Box } from '@mui/system';
 import Swal from 'sweetalert2'
 import MultipleImage from '../components/imageup/addMultipleImage';
 import Filebase from 'react-file-base64'
+import FullPagespinner from '../components/spinner/fullPagespinner';
+import { toast } from 'react-hot-toast';
 
 
 const CreateHotel = () => {
@@ -47,7 +49,7 @@ const CreateHotel = () => {
 const submit = ()=>{
   if (hotel.name && hotel.description && hotel.city && hotel.address != null) {
       console.log(hotel);
-      dispatch(createHotel({hotel: hotel, tag:{}}));
+      dispatch(createHotel({hotel: hotel, toast}));
       // setHotel({name:'',description:'',city:'',address:'',photos:[],nearby:[],faq:[]})
     } else {
       Swal.fire({
@@ -69,13 +71,12 @@ React.useEffect(()=>{
   ResetForm();
   setHotel({name:'',description:'',city:'',address:'',photos:[],nearby:[],faq:[]})
   position();
-  console.log(hotel);
 },[])
 
  
-// if (Hloading) {
-//   return  <div className='flex items-center justify-center'>Loading.......</div>
-// }
+if (Hloading) {
+  return  <FullPagespinner isloading={Hloading} />
+}
 
 
   return (

@@ -37,8 +37,8 @@ const BookingPage = () => {
       <div className='container'>
         <div className='flex py-2 justify-between items-center'>
             <div>
-              <h2 className='text-gray-600 font-bold'>{myhotel.name}</h2>
-              <p className='text-gray-400'>{myhotel.address}</p>
+              <h2 className='text-gray-600 font-bold'>{myhotel?.name}</h2>
+              <p className='text-gray-400'>{myhotel?.address}</p>
             </div>
             <div className='flex space-x-2'>
             <Button variant="outlined" startIcon={<Iconify icon="mdi:guest-room-outline" color="orange" /> }

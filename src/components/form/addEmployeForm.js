@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom'
 
 const AddEmployeForm = ({isupdate=false,data },...props) => {
     const {email,phone,name,img,jobtitle,sallary,_id} = data ?? {};
- console.log(data);
     const [nemail, setEmail] = React.useState(email ?? '');
     const [nphone, setPhone] = React.useState(phone ?? '');
     const [nname, setname] = React.useState(name ?? '');

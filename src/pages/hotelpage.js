@@ -29,8 +29,8 @@ const Hotelpage = () => {
       </Helmet>
     <div className='container'>
         <div className='py-2'>
-            <h2 className='text-gray-600 font-bold'>{myhotel.name}</h2>
-            <p className='text-gray-400'>{myhotel.address}</p>
+            <h2 className='text-gray-600 font-bold'>{myhotel?.name}</h2>
+            <p className='text-gray-400'>{myhotel?.address}</p>
         </div>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={4}>
@@ -40,7 +40,7 @@ const Hotelpage = () => {
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <AppWidgetSummary title="Primary Hotel Name" total={myhotel.name} color="warning" icon={'material-symbols:supervised-user-circle'} />
+            <AppWidgetSummary title="Primary Hotel Name" total={myhotel?.name} color="warning" icon={'material-symbols:supervised-user-circle'} />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <AppWidgetSummary title="Available Room" total={1352831} color="info" icon={'material-symbols:supervised-user-circle'} />

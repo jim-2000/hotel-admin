@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
 // mocks_
-import account from '../../../_mock/account';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../../redux/slice/authSlice';
 

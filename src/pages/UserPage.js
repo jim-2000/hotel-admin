@@ -31,7 +31,6 @@ import Scrollbar from '../components/scrollbar';
 // sections
 import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
-import USERLIST from '../_mock/user';
 import { deleteUser, fetchUser, updateUser } from '../redux/slice/UserSlice';
 import SimpleModal from '../components/modalBox/simpleModal';
 import FormDialog from '../components/modalBox/formDialog';
@@ -116,14 +115,7 @@ export default function UserPage() {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
+ 
 
   // const handleClick = (event, name) => {
   //   const selectedIndex = selected.indexOf(name);
@@ -188,10 +180,10 @@ export default function UserPage() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={USERLIST.length}
+                  rowCount={users.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
+           
                 />
                 <TableBody>
                   
@@ -202,7 +194,7 @@ export default function UserPage() {
                     const selectedUser = selected.indexOf(_id) !== -1;                   
 
                     return (
-                      <TableRow hover key={_id} className={`${role === 'admin' ? 'bg-teal-600' : 'bg-gray-400'}`}>
+                      <TableRow hover key={_id} className={`${role === 'admin' ? 'bg-teal-600' : 'bg-gray-400'} rounded-md px-1`}>
                         
 
                         <TableCell component="th" scope="row" padding="none">
@@ -288,50 +280,12 @@ export default function UserPage() {
             </TableContainer>
           </Scrollbar>
 
-          {/* <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={USERLIST.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          /> */}
+         
         </Card>
       </Container>
      
 
-    
-                            {/* <Popover
-                              open={Boolean(open)}
-                              anchorEl={open}
-                              onClose={handleCloseMenu}
-                              anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-                              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                              PaperProps={{
-                                sx: {
-                                  p: 1,
-                                  width: 140,
-                                  '& .MuiMenuItem-root': {
-                                    px: 1,
-                                    typography: 'body2',
-                                    borderRadius: 0.75,
-                                  },
-                                },
-                              }}
-                            >
-                              <FormDialog widget={<MenuItem
-                              >
-                                <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-                                Edit
-                              </MenuItem>} data={data} />
-
-                              <MenuItem sx={{ color: 'error.main' }}>
-                                <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-                                Delete
-                              </MenuItem>
-                            </Popover> */}
-      
+     
     </>
   );
 }

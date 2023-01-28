@@ -1,5 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
@@ -19,28 +18,37 @@ import {
   AppConversionRates,
   AppBookingChart,
 } from '../sections/@dashboard/app';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Allroom } from '../redux/slice/roomSlice';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { getAllHotels, getHotel } from '../redux/slice/hotelSlice';
-
+import {  getAllBookings } from '../redux/slice/bookinSlice';
+import { getEmployees } from '../redux/slice/employeSlice';
+import {format} from 'date-fns'
 
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
   const theme = useTheme();
-  
+  const {user} = useSelector((state)=>state.auth)
+  const {users} = useSelector((state)=>state.user)
+  const {Booking} = useSelector((state)=>state.book)
+  const {rooms} = useSelector((state)=>state.room)
+  const {employees} = useSelector((state)=>state.employe)
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getHotel());
     dispatch(getAllHotels(toast));
     dispatch(Allroom(toast));    
+    dispatch(getAllBookings(toast)); 
+    dispatch(getEmployees());
   }, [ ])
   
-
-
+const onlinePayment = Booking?.filter((book)=>book.IsOnlinepaid === true)
+const offlinePayment = Booking?.filter((book)=>book.IscashOn === true)
+console.log(offlinePayment.length);
   return (
     <>
       <Helmet>
@@ -50,24 +58,24 @@ export default function DashboardAppPage() {
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back JIM
+          Hi, Welcome back {user?.username}
         </Typography>
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total Booking" total={872} color="success" icon={'ant-design:home-filled'} />
+            <AppWidgetSummary title="Total Booking" total={Booking?.length} color="success" icon={'ant-design:home-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Users" total={1352831} color="info" icon={'material-symbols:supervised-user-circle'} />
+            <AppWidgetSummary title="Users" total={users?.length} color="info" icon={'material-symbols:supervised-user-circle'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Booking" total={285} color="success" icon={'arcticons:booking'} subtitle="Monthly" />
+            <AppWidgetSummary title="Total Room" total={rooms?.length} color="success" icon={'arcticons:booking'}  />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Check In" total={53} subtitle="Monthly" color="success" icon={'mi-log-in'} />  
+            <AppWidgetSummary title="Total Employe" total={employees?.length} color="success" icon={'mi-log-in'} />  
           </Grid>
           
           <Grid item xs={12} md={6} lg={8}>
@@ -75,7 +83,7 @@ export default function DashboardAppPage() {
             chartData={
               [
                 {
-                name: Date.now(),                
+                name: format(Date.now(),'LLL'),                
                 data:[
                 {
                     x: 'Jan',
@@ -130,7 +138,7 @@ export default function DashboardAppPage() {
               },
                
             ]}
-             
+            //  chartData={Booking}
             title="Booking Chart"
             subheader="(+43%) than last month"
             />
@@ -141,28 +149,27 @@ export default function DashboardAppPage() {
             <AppCurrentVisits
               title="Payment Methods"
               chartData={[
-                { label: 'Visa', value: 2055 },
-                { label: 'Cash On', value: 6435 },
-                { label: 'Mastercard', value: 943 },
-                { label: 'Bkash', value: 3240 },
+                { label: 'Stripe', value: onlinePayment.length ??33 },
+                { label: 'Cash On', value: offlinePayment.length ??66 },
+
               ]}
               chartColors={[
-                theme.palette.primary.main,
+                theme.palette.success.main,
                 theme.palette.grey[500],
                 theme.palette.warning.main,
-                theme.palette.success.main,
               ]}
               subheader="Uses 80% Cash On"
             />
           </Grid>
 
-          {/* <Grid item xs={12} md={6} lg={8}>
+          <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates
               title="Conversion Rates"
               subheader="(+43%) than last year"
-              chartData={[
-                { label: 'Italy', value: 400 },
-                { label: 'Japan', value: 430 },
+              chartData={
+                [
+                { label: 'Banglades', value: 400 },
+                { label: 'India', value: 430 },
                 { label: 'China', value: 448 },
                 { label: 'Canada', value: 470 },
                 { label: 'France', value: 540 },
@@ -171,53 +178,15 @@ export default function DashboardAppPage() {
                 { label: 'Netherlands', value: 1100 },
                 { label: 'United States', value: 1200 },
                 { label: 'United Kingdom', value: 1380 },
-              ]}
-            />
-          </Grid> */}
-
-          {/* <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject
-              title="Current Subject"
-              chartLabels={['Check In', 'History', 'Physics', 'Geography', 'Chinese', 'Math']}
-              chartData={[
-                { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
-                { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
-                { name: 'Series 3', data: [44, 76, 78, 13, 43, 10] },
-              ]}
-              chartColors={[...Array(6)].map(() => theme.palette.text.secondary)}
-            />
-          </Grid> */}
-
-          <Grid item xs={12} md={12} lg={8}>
-            <AppNewsUpdate
-              title="News Update"
-              list={[...Array(5)].map((_, index) => ({
-                id: faker.datatype.uuid(),
-                title: faker.name.jobTitle(),
-                description: faker.lorem.sentence(),
-                image: `/assets/images/covers/cover_${index + 1}.jpg`,
-                postedAt: faker.date.recent(),
-              }))}
+              ]
+            }
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
-            <AppOrderTimeline
-              title="Order Timeline"
-              list={[...Array(5)].map((_, index) => ({
-                id: faker.datatype.uuid(),
-                title: [
-                  '1983, orders, $4220',
-                  '12 Invoices have been paid',
-                  'Order #37745 from September',
-                  'New order placed #XF-2356',
-                  'New order placed #XF-2346',
-                ][index],
-                type: `order${index + 1}`,
-                time: faker.date.past(),
-              }))}
-            />
-          </Grid>
+  
+
+          
+           
 
           <Grid item xs={12} md={6} lg={4}>
             <AppTrafficBySite
@@ -247,18 +216,7 @@ export default function DashboardAppPage() {
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AppTasks
-              title="Tasks"
-              list={[
-                { id: '1', label: 'Create FireStone Logo' },
-                { id: '2', label: 'Add SCSS and JS files if required' },
-                { id: '3', label: 'Stakeholder Meeting' },
-                { id: '4', label: 'Scoping & Estimations' },
-                { id: '5', label: 'Sprint Showcase' },
-              ]}
-            />
-          </Grid>
+ 
         </Grid>
       </Container>
     </>

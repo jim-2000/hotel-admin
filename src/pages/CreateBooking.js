@@ -18,7 +18,7 @@ import { Allroom } from '../redux/slice/roomSlice'
 import BookPaymentDetails from '../components/form/book/bookPaymentDetails'
 import { BookNow } from '../redux/slice/bookinSlice'
 import { StripeConfig } from '../redux/api'
-import { loadStripe } from '@stripe/stripe-js'
+
 const CreateBooking = () => {
   const [stripePromice, setStripePromice] = useState(null)
 

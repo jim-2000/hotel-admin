@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const base ='https://hotel-luner.up.railway.app/api/';
-const base = `http://localhost:4000/api/`;
+const base ='https://mern-hotel.onrender.com/api/';
+// const base = `http://localhost:4000/api/`;
 const config = {
     headers: {
       "Access-Control-Allow-Origin": "*",
@@ -26,8 +26,7 @@ API.interceptors.request.use((req) => {
 
 //config
 
-export const StripeConfig =()=>API.get('config');
-export const PaymentsConfig =()=>API.post('payments',)
+ 
 
 // >>>>>>>>>>>>>>>>>>>>>>>> Admin  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
 export const loginAdmin = (form)=>API.post('admin/login', form);

@@ -83,7 +83,11 @@ const initialState = {
 const bookSlice = createSlice({
     name: 'booking',
     initialState,
-    reducers: {},
+    reducers: {
+        allboking:(state) => state.Booking,
+        onlinePayment:(state) =>state.Booking.filter((book) => book.IsOnlinepaid === true),
+        offLinePayment:(state) =>state.Booking.filter((book) => book.IsOnlinepaid === false),
+    },
     extraReducers:(builder) => {
         builder.addCase(getAllBookings.pending,(state,action)=>{
             state.Bloading= true;
@@ -130,5 +134,7 @@ const bookSlice = createSlice({
         })
     }
 })
+
+export const {allboking,onlinePayment,offLinePayment} = bookSlice.actions
 
 export default  bookSlice.reducer;
