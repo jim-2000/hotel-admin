@@ -18,8 +18,7 @@ export const getAllHotels = createAsyncThunk(
 
 // create hotel
 export const createHotel = createAsyncThunk(
-    'hotel/createHotel',
-    async ({hotel,toast}, { rejectWithValue }) => {
+    'hotel/createHotel',async ({hotel,toast}, { rejectWithValue }) => {
        try {
         const response = await api.ApiCreateHotel(hotel)
         toast.success('hotel created')

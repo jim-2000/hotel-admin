@@ -38,14 +38,7 @@ const Hotelalender = () => {
   );
 }
 
-//
-const onSelectEvent = useCallback((calEvent) => {
-  
-  window.clearTimeout(clickRef?.current)
-  clickRef.current = window.setTimeout(() => {
-    window.alert(buildMessage(calEvent, 'onSelectEvent'))
-  }, 250)
-}, [])
+ 
 
 //EVENT STYLE GETTER FOR SLYLING AN EVENT ITEM
 const  eventStyleGetter = (item, start, end, isSelected) =>{
@@ -76,7 +69,6 @@ return {
         allDayAccessor={'conFirmBook'}
         localizer={localizer}
         events={Booking}
-        onDoubleClickEvent={onSelectEvent}
         onSelectSlot={handleSelectSlot}
         startAccessor="checkIn"
         endAccessor="checkOut"

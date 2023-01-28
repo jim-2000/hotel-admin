@@ -12,10 +12,9 @@ toolbar.onView('week');
 }
 const goToMonthView = () => {
 toolbar.onView('month');
-    setTimeout(() => {
-        setOffRangeDateStyle();
-      }, 100)
-    
+    // setTimeout(() => {
+    //     setOffRangeDateStyle();
+    //   }, 100)
     }
 const goToBack = () => {
       let mDate = toolbar.date;
